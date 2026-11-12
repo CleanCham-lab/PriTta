@@ -143,8 +143,6 @@ On WSL, PriTta opens in your Windows browser automatically.
   `PriTta.exe` and `pritta-cli.exe` next to it.
 - **Manually:** `pip install -r requirements.txt pyinstaller`, then
   `pyinstaller --noconfirm --clean PriTta.spec`.
-- **On GitHub:** pushing a tag such as `v1.0.0` runs `.github/workflows/release.yml`,
-  which builds both exe files on Windows and attaches them to a Release.
 
 ## Project layout
 
@@ -161,13 +159,6 @@ pritta/
 tests/          pytest suite, including byte-for-byte parity with primer3.sh
 icon/           original PriTta artwork
 ```
-
-## Mascot and icon
-
-The mascot is `pritta/web/img/mascot.png`. Next to it, `mascot.json` marks where the
-round DNA head is, so the head alone can spin while Primer3 runs. The app icon is
-`pritta/web/img/icon.png` / `icon.ico`. If you delete `mascot.png`, PriTta switches to
-**Helly**, a built-in mascot drawn in SVG (`pritta/web/js/mascot.js`).
 
 ## Citation
 

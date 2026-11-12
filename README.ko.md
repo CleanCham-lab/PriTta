@@ -141,8 +141,6 @@ WSL에서 실행하면 Windows 브라우저로 자동으로 열립니다.
   같은 폴더에 `PriTta.exe`와 `pritta-cli.exe`가 만들어집니다.
 - **직접 명령으로:** `pip install -r requirements.txt pyinstaller`를 실행한 뒤
   `pyinstaller --noconfirm --clean PriTta.spec`를 실행합니다.
-- **GitHub에서:** `v1.0.0` 같은 태그를 push하면 `.github/workflows/release.yml`이
-  Windows에서 exe 두 개를 빌드해 Release에 올립니다.
 
 ## 폴더 구성
 
@@ -159,13 +157,6 @@ pritta/
 tests/          테스트 (primer3.sh와 바이트 단위 일치 검증 포함)
 icon/           PriTta 원본 아트워크
 ```
-
-## 마스코트와 아이콘
-
-마스코트 이미지는 `pritta/web/img/mascot.png`입니다. 옆의 `mascot.json`에 둥근 DNA
-머리 위치가 적혀 있어서 계산하는 동안 머리만 돌아갑니다. 앱 아이콘은
-`pritta/web/img/icon.png` / `icon.ico`입니다. `mascot.png`를 지우면 SVG로 그린 내장
-마스코트 **Helly**(`pritta/web/js/mascot.js`)로 바뀝니다.
 
 ## 인용
 
