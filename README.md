@@ -191,4 +191,4 @@ See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for details.
 
 Developed by **Seung Won Chae**: Molecular Diagnostics Laboratory, Department of
 Laboratory Medicine, Seoul National University Hospital, and Seoul National University
-Cancer Research Institute. PI: Moon-woo Seong.
+Cancer Research Institute.

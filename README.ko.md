@@ -188,4 +188,3 @@ PriTta 소스 코드는 [MIT 라이선스](LICENSE)입니다.
 ## 만든 사람
 
 **채승원 (Seung Won Chae)**: 서울대학교병원 진단검사의학과 분자진단검사실, 서울대학교 암연구소.
-PI: 성문우 (Moon-woo Seong).
