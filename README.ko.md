@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/logo.png" width="128" alt="PriTta">
+  <img src="docs/main.png" width="300" alt="PriTta: 뜌따.. 뜌우따이 뜌따따 우따야!">
 </p>
 
 <h1 align="center">PriTta</h1>
