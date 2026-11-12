@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="ko" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PriTta</title>
+  <link rel="icon" href="img/icon.png">
+  <link rel="stylesheet" href="fonts/fonts.css">
+  <link rel="stylesheet" href="fonts/jua.css">
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<div class="app" id="app">
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark" id="brandMark" aria-hidden="true"></span>
+      <span class="brand-name">Pri<b>Tta</b></span>
+      <span class="brand-ver" id="ver">v1.0.0</span>
+    </div>
+    <div class="top-actions">
+      <span class="engine-chip" id="engineChip"><i></i><span>…</span></span>
+      <div class="seg" id="langSeg" role="group" aria-label="Language">
+        <button type="button" data-lang="ko">KO</button>
+        <button type="button" data-lang="en">EN</button>
+      </div>
+      <button type="button" class="icon-btn" id="themeBtn" data-i18n-title="top.theme">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      </button>
+      <button type="button" class="icon-btn" id="soundBtn" data-i18n-title="top.sound">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H3v6h3l5 4z"/><path class="wave" d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/><path class="mute" d="M16 9l6 6M22 9l-6 6"/></svg>
+      </button>
+      <button type="button" class="icon-btn" id="aboutBtn" data-i18n-title="top.about">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main class="stage">
+    <section class="col-left">
+      <div class="panel seq-panel">
+        <div class="panel-head">
+          <h2 data-i18n="seq.title">서열</h2>
+          <div class="rec-picker" id="recPicker" hidden><select id="recSelect" aria-label="Record"></select></div>
+          <div class="seq-stats" id="seqStats"></div>
+          <div class="toolbar">
+            <button type="button" class="btn ghost" id="openBtn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 6h7l2 2h9v11H3z"/></svg><span data-i18n="seq.open">파일 열기</span></button>
+            <button type="button" class="btn ghost" id="editBtn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16z"/></svg><span data-i18n="seq.edit">편집</span></button>
+            <button type="button" class="btn ghost" id="exampleBtn"><span data-i18n="seq.example">예제</span></button>
+            <button type="button" class="btn ghost danger" id="clearBtn"><span data-i18n="seq.clear">비우기</span></button>
+            <input type="file" id="fileInput" accept=".txt,.fa,.fasta,.fna,.fas,.seq,.in,.out,.primer3,.boulder,text/plain" hidden>
+          </div>
+        </div>
+        <div class="panel-body seq-body" id="seqBody">
+          <div class="dropzone" id="dropzone">
+            <div>
+              <h3 data-i18n="seq.empty.title">서열을 넣어 주세요</h3>
+              <p data-i18n="seq.empty.body"></p>
+              <div class="btn-row">
+                <button type="button" class="btn accent" id="dzOpen"><span data-i18n="seq.open">파일 열기</span></button>
+                <button type="button" class="btn" id="dzPaste"><span data-i18n="seq.empty.paste">직접 입력</span></button>
+                <button type="button" class="btn" id="dzExample"><span data-i18n="seq.example">예제</span></button>
+              </div>
+              <div class="markup-help">
+                <span><i class="sw t"></i><code>[ ]</code> <span data-i18n="seq.legend.t"></span></span>
+                <span><i class="sw x"></i><code>&lt; &gt;</code> <span data-i18n="seq.legend.x"></span></span>
+                <span><i class="sw i"></i><code>{ }</code> <span data-i18n="seq.legend.i"></span></span>
+              </div>
+            </div>
+          </div>
+          <div class="viewer" id="viewer" hidden></div>
+          <div class="editor" id="editor" hidden>
+            <textarea id="editorText" spellcheck="false" aria-label="Sequence"></textarea>
+            <div class="editor-foot">
+              <span class="grow" data-i18n="edit.hint"></span>
+              <button type="button" class="btn ghost" id="editCancel"><span data-i18n="edit.cancel">취소</span></button>
+              <button type="button" class="btn accent" id="editApply"><span data-i18n="edit.apply">적용</span></button>
+            </div>
+          </div>
+          <div class="sel-pop" id="selPop" hidden>
+            <span class="sel-len" id="selLen"></span>
+            <button type="button" data-region="targets"><i class="sw t"></i><span data-i18n="sel.target"></span></button>
+            <button type="button" data-region="excluded"><i class="sw x"></i><span data-i18n="sel.exclude"></span></button>
+            <button type="button" data-region="included"><i class="sw i"></i><span data-i18n="sel.include"></span></button>
+            <button type="button" data-region="clear"><span data-i18n="sel.clear"></span></button>
+            <button type="button" data-region="copy"><span data-i18n="sel.copy"></span></button>
+          </div>
+        </div>
+        <div class="seq-foot" id="seqFoot" hidden>
+          <div class="legend">
+            <span><i class="sw t"></i><span data-i18n="seq.legend.t"></span></span>
+            <span><i class="sw x"></i><span data-i18n="seq.legend.x"></span></span>
+            <span><i class="sw i"></i><span data-i18n="seq.legend.i"></span></span>
+            <span><i class="sw f"></i><span data-i18n="seq.legend.f"></span></span>
+            <span><i class="sw r"></i><span data-i18n="seq.legend.r"></span></span>
+            <span><i class="sw p"></i><span data-i18n="seq.legend.p"></span></span>
+          </div>
+          <label class="legend" style="gap:6px;align-items:center;display:inline-flex">
+            <span class="switch" style="transform:scale(.8)"><input type="checkbox" id="baseColors" checked><i></i></span>
+            <span data-i18n="seq.colors"></span>
+          </label>
+          <span class="cursor-info" id="cursorInfo"></span>
+        </div>
+      </div>
+
+      <div class="panel map-panel">
+        <div class="panel-head">
+          <h2 data-i18n="map.title">앰플리콘 지도</h2>
+          <span class="map-hint" data-i18n="map.hint"></span>
+        </div>
+        <div class="map-wrap" id="map"></div>
+      </div>
+
+      <div class="dock">
+        <div class="mascot" id="mascot" role="button" tabindex="0" aria-label="Helly"></div>
+        <div class="bubble"><span class="bubble-name">Helly</span><p id="bubbleText" aria-live="polite"></p></div>
+      </div>
+    </section>
+
+    <section class="col-right">
+      <div class="panel side-panel">
+        <nav class="tabs" role="tablist">
+          <button type="button" role="tab" data-tab="settings" class="on"><span data-i18n="tab.settings">설정</span></button>
+          <button type="button" role="tab" data-tab="results"><span data-i18n="tab.results">결과</span><span class="tab-count" id="resCount" hidden>0</span></button>
+        </nav>
+        <div class="tab-body" id="tab-settings"></div>
+        <div class="tab-body" id="tab-results" hidden></div>
+      </div>
+      <div class="launch">
+        <button type="button" class="btn-launch" id="runBtn"><span id="runLabel" data-i18n="run.go">프라이머 설계</span><kbd>Ctrl ↵</kbd></button>
+        <label class="run-all" id="runAllWrap" hidden><span class="switch"><input type="checkbox" id="runAll"><i></i></span><span data-i18n="run.all"></span></label>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div class="toasts" id="toasts" aria-live="polite"></div>
+<div class="drop-overlay" id="dropOverlay" hidden>Drop!</div>
+
+<div class="modal" id="about" hidden>
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="aboutTitle">
+    <div class="about-top">
+      <div class="helly-wrap" id="aboutHelly"></div>
+      <div><h2 id="aboutTitle">PriTta <span class="brand-ver" id="aboutVer"></span></h2><p data-i18n="app.tagline"></p></div>
+    </div>
+    <p data-i18n="about.body"></p>
+    <dl>
+      <dt data-i18n="about.engine"></dt><dd id="aboutEngine"></dd>
+      <dt data-i18n="about.author"></dt><dd>Seung Won Chae</dd>
+      <dt data-i18n="about.lab"></dt><dd>Molecular Diagnostics Laboratory, Department of Laboratory Medicine, Seoul National University Hospital</dd>
+      <dt data-i18n="about.mascot"></dt><dd data-i18n="about.mascot.d"></dd>
+      <dt data-i18n="about.cite"></dt><dd>Untergasser A, et al. Primer3 — new capabilities and interfaces. <i>Nucleic Acids Res</i>. 2012;40(15):e115.</dd>
+      <dt data-i18n="about.license"></dt><dd>MIT (PriTta) · GPL-2.0 (Primer3 / primer3-py) · SIL OFL 1.1 (fonts)</dd>
+    </dl>
+    <div class="close-row">
+      <button type="button" class="btn" id="repoBtn"><span data-i18n="about.repo"></span></button>
+      <button type="button" class="btn accent" id="aboutClose"><span data-i18n="about.close"></span></button>
+    </div>
+  </div>
+</div>
+
+<script src="js/i18n.js"></script>
+<script src="js/bridge.js"></script>
+<script src="js/mascot.js"></script>
+<script src="js/viewer.js"></script>
+<script src="js/map.js"></script>
+<script src="js/settings.js"></script>
+<script src="js/results.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

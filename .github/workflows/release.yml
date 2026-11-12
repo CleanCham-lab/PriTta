@@ -1,0 +1,50 @@
+name: release
+
+# Builds PriTta.exe and pritta-cli.exe on Windows.
+# Run it by hand: Actions -> release -> Run workflow, and give the release tag
+# (for example v1.0.1). The exe files are attached to that GitHub Release
+# (created if it does not exist yet) and are also kept as a workflow artifact.
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release tag to attach the exe files to (e.g. v1.0.1)"
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt pyinstaller pytest
+      - name: Test
+        run: python -m pytest -q
+      - name: Build
+        run: pyinstaller --noconfirm --clean PriTta.spec
+      - name: Smoke test (CLI)
+        shell: pwsh
+        run: |
+          dist\pritta-cli.exe examples\example_seq.txt smoke
+          if (-not (Test-Path smoke.primer3.out)) { exit 1 }
+      - uses: actions/upload-artifact@v4
+        with:
+          name: PriTta-windows-x64
+          path: |
+            dist/PriTta.exe
+            dist/pritta-cli.exe
+      - name: Attach to release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ inputs.tag }}
+          files: |
+            dist/PriTta.exe
+            dist/pritta-cli.exe

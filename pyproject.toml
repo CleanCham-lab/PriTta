@@ -1,0 +1,51 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pritta"
+dynamic = ["version"]
+description = "PriTta (Primer + 뜌땨) - a game-style desktop app for Primer3 PCR primer design"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "Seung Won Chae" }]
+keywords = ["primer3", "pcr", "primer design", "qpcr", "bioinformatics", "gui"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Operating System :: Microsoft :: Windows",
+  "Operating System :: POSIX :: Linux",
+  "Operating System :: MacOS",
+  "Topic :: Scientific/Engineering :: Bio-Informatics",
+  "Environment :: Win32 (MS Windows)",
+]
+dependencies = [
+  "primer3-py>=2.0",
+  "pywebview>=5.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest", "pyinstaller>=6.0", "pillow"]
+
+[project.scripts]
+pritta-cli = "pritta.cli:main"
+
+[project.gui-scripts]
+pritta = "pritta.app:main"
+
+[project.urls]
+Homepage = "https://github.com/CleanCham-lab/PriTta"
+Issues = "https://github.com/CleanCham-lab/PriTta/issues"
+
+[tool.setuptools]
+packages = ["pritta"]
+include-package-data = true
+
+[tool.setuptools.package-data]
+pritta = ["web/*", "web/**/*"]
+
+[tool.setuptools.dynamic]
+version = { attr = "pritta.__version__" }
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
